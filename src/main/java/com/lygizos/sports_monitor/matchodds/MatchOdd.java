@@ -1,5 +1,6 @@
 package com.lygizos.sports_monitor.matchodds;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.lygizos.sports_monitor.Common;
 import com.lygizos.sports_monitor.match.Match;
 import jakarta.persistence.*;
@@ -12,8 +13,9 @@ public class MatchOdd {
     @GeneratedValue
     private Integer id;
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="match_id")
+    @ManyToOne
+    @JoinColumn( name="match_id" )
+    @JsonBackReference
     private Match match;
     @NotNull
     private Common.Specifier specifier;
@@ -32,9 +34,9 @@ public class MatchOdd {
         return match;
     }
 
-    public void setMatch(@NotNull Match match) {
-        this.match = match;
-    }
+    public void setMatch(@NotNull Match matchParent) {
+        this.match = matchParent;
+     }
 
     public @NotNull Common.Specifier getSpecifier() {
         return specifier;

@@ -1,10 +1,13 @@
 package com.lygizos.sports_monitor.match;
 import static com.lygizos.sports_monitor.Common.Sport;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lygizos.sports_monitor.matchodds.MatchOdd;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,8 +28,13 @@ public class Match {
     private String teamB;
     @NotNull
     private Sport sport;
-    @OneToOne(mappedBy = "match")
-    private MatchOdd odd;
+
+    @OneToMany(
+            mappedBy = "match",
+            cascade = {CascadeType.ALL}
+    )
+    @JsonManagedReference
+    private List<MatchOdd> oddList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -81,6 +89,14 @@ public class Match {
 
     public void setSport(Sport sport) {
         this.sport = sport;
+    }
+
+    public List<MatchOdd> getOddList() {
+        return oddList;
+    }
+
+    public void setOddList(List<MatchOdd> oddList) {
+        this.oddList = oddList;
     }
 
     @Override

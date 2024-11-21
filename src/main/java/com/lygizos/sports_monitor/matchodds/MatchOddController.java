@@ -57,6 +57,9 @@ public class MatchOddController {
         if (matchOddId == null) {
             throw new BadRequestException("PathVariable matchOddId not provided. Please check again");
         }
+        if (!repository.existsById(matchOddId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("\"Match Odd\" with id %d not found", matchOddId));
+        }
         MatchOdd matchOddToUpdate = repository.getReferenceById(matchOddId);
         matchOddToUpdate.setOdd(input.odd());
         matchOddToUpdate.setSpecifier(stringToSpecifier(input.specifier()));
