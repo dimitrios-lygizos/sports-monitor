@@ -34,7 +34,7 @@ public class MatchController {
     }
 
     @PutMapping("/matches/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public RecordOutput updateMatch(@PathVariable Integer id, @RequestBody RecordInput inputMatch) {
         // check if raw exists.
         if (!repository.existsById(id)) {
@@ -71,6 +71,7 @@ public class MatchController {
     }
 
     @GetMapping({"/matches", "/matches/{id}"})
+    @ResponseStatus(HttpStatus.OK)
     public Collection<RecordOutput> getMatch(@PathVariable(required = false) Integer id) {
         if (id != null) {
             Match m = repository.findById(id).orElseThrow(() -> new ResponseStatusException(

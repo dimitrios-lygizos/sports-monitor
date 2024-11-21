@@ -5,6 +5,7 @@ import com.lygizos.sports_monitor.Common;
 import com.lygizos.sports_monitor.match.Match;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name="odds")
@@ -20,6 +21,7 @@ public class MatchOdd {
     @NotNull
     private Common.Specifier specifier;
     @NotNull
+    @PositiveOrZero
     private double odd;
 
     public Integer getId() {
@@ -51,6 +53,9 @@ public class MatchOdd {
     }
 
     public void setOdd(@NotNull double odd) {
+        if (odd < 0.0) {
+            throw new IllegalArgumentException("Odd must be a Positive/Zero double");
+        }
         this.odd = odd;
     }
 }

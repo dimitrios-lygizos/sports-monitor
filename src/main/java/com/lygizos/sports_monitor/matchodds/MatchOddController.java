@@ -23,6 +23,7 @@ public class MatchOddController {
     }
 
     @PostMapping("/matchodds")
+    @ResponseStatus(HttpStatus.CREATED)
     public String addMatchOdd(
             @RequestBody RecordInput input
     ) {
@@ -32,6 +33,7 @@ public class MatchOddController {
     }
 
     @GetMapping({"/matchodds", "/matchodds/{id}"})
+    @ResponseStatus(HttpStatus.OK)
     public Collection<RecordOutput> getMatchOdds(
             @PathVariable(required = false) Integer id
     ) {
@@ -50,6 +52,7 @@ public class MatchOddController {
     }
 
     @PutMapping("/matchodds/{matchOddId}")
+    @ResponseStatus(HttpStatus.OK)
     public RecordOutput updateMatchOdd(
             @PathVariable Integer matchOddId,
             @RequestBody RecordInput input
@@ -68,6 +71,7 @@ public class MatchOddController {
     }
 
     @DeleteMapping({"/matchodds", "/matchodds/{matchOddId}"})
+    @ResponseStatus(HttpStatus.OK)
     public void deleteMatchOdds(
             @PathVariable(required = false) Integer matchOddId
     ) {
