@@ -12,8 +12,8 @@ import static com.lygizos.sports_monitor.Common.integerToSport;
 
 @RestController
 public class MatchController {
-    MatchMapper matchMapper;
-    MatchRepository repository;
+    private final MatchMapper matchMapper;
+    private final MatchRepository repository;
 
     public MatchController(
             MatchMapper matchMapper,
@@ -35,7 +35,7 @@ public class MatchController {
 
     @PutMapping("/matches/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public RecordOutput updateMatch(@PathVariable(required = true) Integer id, @RequestBody RecordInput inputMatch) {
+    public RecordOutput updateMatch(@PathVariable Integer id, @RequestBody RecordInput inputMatch) {
         // check if raw exists.
         if (!repository.existsById(id)) {
             throw new ResponseStatusException(
@@ -73,15 +73,13 @@ public class MatchController {
     @GetMapping({"/matches", "/matches/{id}"})
     public Collection<RecordOutput> getMatch(@PathVariable(required = false) Integer id) {
         if (id != null) {
-            Match m = repository.findById(id).orElseThrow( () -> {return new ResponseStatusException(
+            Match m = repository.findById(id).orElseThrow(() -> new ResponseStatusException(
                     HttpStatus.NOT_FOUND, String.format("match with id %d not found", id)
-            );});
+            ));
             return Arrays.asList(matchMapper.MatchToOutputRecord(m));
         } else {
             List<Match> matchList = repository.findAll();
-            return matchList.stream().map((m) -> {
-                return matchMapper.MatchToOutputRecord(m);
-            }).toList();
+            return matchList.stream().map(matchMapper::MatchToOutputRecord).toList();
         }
     }
 }

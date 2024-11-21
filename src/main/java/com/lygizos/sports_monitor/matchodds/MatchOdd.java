@@ -10,15 +10,15 @@ import jakarta.validation.constraints.NotNull;
 public class MatchOdd {
     @Id
     @GeneratedValue
-    Integer id;
+    private Integer id;
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="match_id")
-    Match match;
+    private Match match;
     @NotNull
-    Common.Specifier specifier;
+    private Common.Specifier specifier;
     @NotNull
-    double odd;
+    private double odd;
 
     public Integer getId() {
         return id;
