@@ -1,5 +1,6 @@
 package com.lygizos.sports_monitor.matchodds;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,9 +53,9 @@ public class MatchOddController {
     public RecordOutput updateMatchOdd(
             @PathVariable Integer matchOddId,
             @RequestBody RecordInput input
-    ) {
+    ) throws BadRequestException {
         if (matchOddId == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("\"Match Odd\" with id %d not found", matchOddId));
+            throw new BadRequestException("PathVariable matchOddId not provided. Please check again");
         }
         MatchOdd matchOddToUpdate = repository.getReferenceById(matchOddId);
         matchOddToUpdate.setOdd(input.odd());
