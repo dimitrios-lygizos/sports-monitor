@@ -9,6 +9,9 @@ How to run:
     with java -jar ./target/sports-monitor-0.0.1-SNAPSHOT.jar, you can execute the application and enjoy.
 
  as a containerized WEB APP <>
- 
+ from project’s root folder perform the following:
+
  - run "docker-compose up" to pull the images, create the containers and deploy.
  - run "docker-compose down" to delete the web application.
+
+Be careful, the URL endpoint has prefix "/sportMonitor"
