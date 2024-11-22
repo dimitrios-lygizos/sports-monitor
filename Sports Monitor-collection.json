@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "d7a045cb-0f0a-4577-b7be-ff4eddd0351e",
+		"name": "Sports Monitor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "7694307"
+	},
+	"item": [
+		{
+			"name": "MatchReqs",
+			"item": [
+				{
+					"name": "GetMatch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matches/20"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllMatches",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matches"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMatch",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matches/1"
+					},
+					"response": []
+				},
+				{
+					"name": "updateMatch",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"description\": \"We corrected the category {BASKETBALL}\",\r\n        \"matchDate\": \"02/12/2024\",\r\n        \"matchTime\": \"19:30\",\r\n        \"team_a\": \"Partizan\",\r\n        \"team_b\": \"OSFP\",\r\n        \"sport\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/sportMonitor/matches/"
+					},
+					"response": []
+				},
+				{
+					"name": "addMatch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"description\": \"a basketball match\",\r\n        \"match_date\": \"05/12/2024\",\r\n        \"match_time\": \"17:30\",\r\n        \"team_a\": \"Basconia\",\r\n        \"team_b\": \"Real Madrid\",\r\n        \"sport\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/sportMonitor/matches"
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllMatches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matches"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MatchOddReqs",
+			"item": [
+				{
+					"name": "GetAllMatchOdds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matchodds"
+					},
+					"response": []
+				},
+				{
+					"name": "addMatchOdd",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"match_id\": 1,\r\n        \"specifier\": \"1\",\r\n        \"odd\": 1.29\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/sportMonitor/matchodds"
+					},
+					"response": []
+				},
+				{
+					"name": "updateMatchOdd",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"matchId\": 3,\r\n    \"specifier\": \"X\",\r\n    \"odd\": 3.10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/sportMonitor/matchodds/2"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMatchOdd",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matchodds/5"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllMatchOdds",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matchodds"
+					},
+					"response": []
+				},
+				{
+					"name": "GetMatchOdd",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/sportMonitor/matchodds/2"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
