@@ -1,7 +1,11 @@
 package com.lygizos.sports_monitor.matchodds;
 
 import com.lygizos.sports_monitor.Common;
-import com.lygizos.sports_monitor.match.Match;
+import com.lygizos.sports_monitor.model.match.Match;
+import com.lygizos.sports_monitor.model.matchodds.MatchOdd;
+import com.lygizos.sports_monitor.model.matchodds.MatchOddMapper;
+import com.lygizos.sports_monitor.model.matchodds.RecordInput;
+import com.lygizos.sports_monitor.model.matchodds.RecordOutput;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;

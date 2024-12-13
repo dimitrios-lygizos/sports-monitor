@@ -1,5 +1,6 @@
-package com.lygizos.sports_monitor.match;
+package com.lygizos.sports_monitor.controller;
 
+import com.lygizos.sports_monitor.model.match.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

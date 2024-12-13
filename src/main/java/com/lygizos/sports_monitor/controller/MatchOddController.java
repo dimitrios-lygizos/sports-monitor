@@ -1,5 +1,6 @@
-package com.lygizos.sports_monitor.matchodds;
+package com.lygizos.sports_monitor.controller;
 
+import com.lygizos.sports_monitor.model.matchodds.*;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

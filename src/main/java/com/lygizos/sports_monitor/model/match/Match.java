@@ -1,8 +1,8 @@
-package com.lygizos.sports_monitor.match;
+package com.lygizos.sports_monitor.model.match;
 import static com.lygizos.sports_monitor.Common.Sport;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.lygizos.sports_monitor.matchodds.MatchOdd;
+import com.lygizos.sports_monitor.model.matchodds.MatchOdd;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 

@@ -1,4 +1,4 @@
-package com.lygizos.sports_monitor.match;
+package com.lygizos.sports_monitor.model.match;
 
 public record RecordOutput(
         Integer id,

@@ -1,6 +1,6 @@
-package com.lygizos.sports_monitor.matchodds;
+package com.lygizos.sports_monitor.model.matchodds;
 
-import com.lygizos.sports_monitor.match.Match;
+import com.lygizos.sports_monitor.model.match.Match;
 import org.springframework.stereotype.Service;
 
 import static com.lygizos.sports_monitor.Common.*;

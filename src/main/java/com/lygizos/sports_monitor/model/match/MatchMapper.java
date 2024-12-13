@@ -1,4 +1,4 @@
-package com.lygizos.sports_monitor.match;
+package com.lygizos.sports_monitor.model.match;
 import static com.lygizos.sports_monitor.Common.*;
 
 import org.springframework.stereotype.Service;
