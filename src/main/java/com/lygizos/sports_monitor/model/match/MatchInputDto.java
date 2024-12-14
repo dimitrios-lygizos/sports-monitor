@@ -2,7 +2,7 @@ package com.lygizos.sports_monitor.model.match;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-public record RecordInput(
+public record MatchInputDto(
     String description,
     @JsonAlias("match_date")
     String matchDate,

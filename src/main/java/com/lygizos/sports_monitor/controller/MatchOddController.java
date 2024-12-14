@@ -26,7 +26,7 @@ public class MatchOddController {
     @PostMapping("/matchodds")
     @ResponseStatus(HttpStatus.CREATED)
     public String addMatchOdd(
-            @RequestBody RecordInput input
+            @RequestBody MatchOddInputDto input
     ) {
         MatchOdd beanBeforeSave = oddMapper.requestDtoToMatchOddBean(input);
         MatchOdd beanAfterSave = repository.save(beanBeforeSave);
@@ -35,17 +35,17 @@ public class MatchOddController {
 
     @GetMapping({"/matchodds", "/matchodds/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Collection<RecordOutput> getMatchOdds(
+    public Collection<MatchOddOutputDto> getMatchOdds(
             @PathVariable(required = false) Integer id
     ) {
         if (id != null) {
-            List<RecordOutput> recordOutput = new ArrayList<>(1);
-            recordOutput.add(
+            List<MatchOddOutputDto> matchOddOutputDto = new ArrayList<>(1);
+            matchOddOutputDto.add(
                 oddMapper.matchOddBeanToResponseDto( repository.findById(id)
                     .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("\"Match Odd\" with id %d not found", id)))
                 )
             );
-            return recordOutput;
+            return matchOddOutputDto;
         } else {
             List<MatchOdd> allOdds = repository.findAll();
             return allOdds.stream().map(oddMapper::matchOddBeanToResponseDto).toList();
@@ -54,9 +54,9 @@ public class MatchOddController {
 
     @PutMapping("/matchodds/{matchOddId}")
     @ResponseStatus(HttpStatus.OK)
-    public RecordOutput updateMatchOdd(
+    public MatchOddOutputDto updateMatchOdd(
             @PathVariable Integer matchOddId,
-            @RequestBody RecordInput input
+            @RequestBody MatchOddInputDto input
     ) throws BadRequestException {
         if (matchOddId == null) {
             throw new BadRequestException("PathVariable matchOddId not provided. Please check again");

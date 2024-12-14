@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MatchMapper {
-    public Match inputRecordToMatch(RecordInput input) {
+    public Match inputRecordToMatch(MatchInputDto input) {
         Match m = new Match();
         m.setDescription(input.description());
         m.setMatchDate(input.matchDate());
@@ -16,8 +16,8 @@ public class MatchMapper {
         return m;
     }
 
-    public RecordOutput MatchToOutputRecord(Match m) {
-        return new RecordOutput(
+    public MatchOutputDto MatchToOutputRecord(Match m) {
+        return new MatchOutputDto(
             m.getId(),
             m.getDescription(),
             m.getMatchDate(),

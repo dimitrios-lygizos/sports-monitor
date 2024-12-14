@@ -2,7 +2,7 @@ package com.lygizos.sports_monitor.model.matchodds;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-public record RecordOutput(
+public record MatchOddOutputDto(
     Integer id,
     @JsonAlias("match_id")
     Integer matchId,

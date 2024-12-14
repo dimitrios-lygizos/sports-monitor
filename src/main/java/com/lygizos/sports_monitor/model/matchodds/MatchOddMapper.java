@@ -7,7 +7,7 @@ import static com.lygizos.sports_monitor.Common.*;
 
 @Service
 public class MatchOddMapper {
-    public MatchOdd requestDtoToMatchOddBean(RecordInput record) {
+    public MatchOdd requestDtoToMatchOddBean(MatchOddInputDto record) {
         if (record == null) {
             throw new IllegalArgumentException("Input provided is null, please provide a valid input source");
         }
@@ -20,8 +20,8 @@ public class MatchOddMapper {
         return mo;
     }
 
-    public RecordOutput matchOddBeanToResponseDto(MatchOdd m) {
-        return new RecordOutput(
+    public MatchOddOutputDto matchOddBeanToResponseDto(MatchOdd m) {
+        return new MatchOddOutputDto(
             m.getId(),
             m.getMatch().getId(),
             specifierToString(m.getSpecifier()),

@@ -4,8 +4,8 @@ import com.lygizos.sports_monitor.Common;
 import com.lygizos.sports_monitor.model.match.Match;
 import com.lygizos.sports_monitor.model.matchodds.MatchOdd;
 import com.lygizos.sports_monitor.model.matchodds.MatchOddMapper;
-import com.lygizos.sports_monitor.model.matchodds.RecordInput;
-import com.lygizos.sports_monitor.model.matchodds.RecordOutput;
+import com.lygizos.sports_monitor.model.matchodds.MatchOddInputDto;
+import com.lygizos.sports_monitor.model.matchodds.MatchOddOutputDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
@@ -20,7 +20,7 @@ class MatchOddMapperTest {
 
     @Test
     public void testRequestDtoToMatchOddBeanValid() {
-        RecordInput recordArgument = new RecordInput(
+        MatchOddInputDto recordArgument = new MatchOddInputDto(
                 99, // match id
                 AWAY_SPECIFIER, // specifier
                 2.45 // odd
@@ -33,7 +33,7 @@ class MatchOddMapperTest {
 
     @Test
     public void testRequestDtoToMatchOddBeanValid2() {
-        RecordInput recordArgument = new RecordInput(
+        MatchOddInputDto recordArgument = new MatchOddInputDto(
                 10, // match id
                 DRAW_SPECIFIER, // specifier
                 2 // odd
@@ -46,7 +46,7 @@ class MatchOddMapperTest {
 
     @Test
     public void testRequestDtoToMatchOddBeanNegativeOdd() {
-        RecordInput recordArgument = new RecordInput(
+        MatchOddInputDto recordArgument = new MatchOddInputDto(
                 10, // match id
                 DRAW_SPECIFIER, // specifier
                 -2.1 // odd
@@ -57,7 +57,7 @@ class MatchOddMapperTest {
 
     @ParameterizedTest
     @NullSource
-    public void testRequestDtoToMatchOddBeanNullCheck(RecordInput recordArgument) {
+    public void testRequestDtoToMatchOddBeanNullCheck(MatchOddInputDto recordArgument) {
         String exceptionMsg = "Input provided is null, please provide a valid input source";
         assertThrows(IllegalArgumentException.class, () -> mapper.requestDtoToMatchOddBean(recordArgument), exceptionMsg);
     }
@@ -74,7 +74,7 @@ class MatchOddMapperTest {
         mo.setOdd(1.99);
         mo.setSpecifier(Common.stringToSpecifier(HOME_SPECIFIER));
 
-        RecordOutput mOutput = mapper.matchOddBeanToResponseDto(mo);
+        MatchOddOutputDto mOutput = mapper.matchOddBeanToResponseDto(mo);
 
         assertEquals(mOutput.id(), mo.getId());
         assertEquals(mOutput.matchId(), mo.getMatch().getId());

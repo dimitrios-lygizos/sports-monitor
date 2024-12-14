@@ -1,6 +1,6 @@
 package com.lygizos.sports_monitor.model.match;
 
-public record RecordOutput(
+public record MatchOutputDto(
         Integer id,
         String description,
         String matchDate,

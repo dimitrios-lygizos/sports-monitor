@@ -27,7 +27,7 @@ public class MatchController {
     @PostMapping("/matches")
     @ResponseStatus(HttpStatus.CREATED)
     public String addMatch(
-            @RequestBody RecordInput inputMatch
+            @RequestBody MatchInputDto inputMatch
     ) {
         Match rawMatch = matchMapper.inputRecordToMatch(inputMatch);
         Match storedMatch = repository.save(rawMatch);
@@ -36,7 +36,7 @@ public class MatchController {
 
     @PutMapping("/matches/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RecordOutput updateMatch(@PathVariable Integer id, @RequestBody RecordInput inputMatch) {
+    public MatchOutputDto updateMatch(@PathVariable Integer id, @RequestBody MatchInputDto inputMatch) {
         // check if raw exists.
         if (!repository.existsById(id)) {
             throw new ResponseStatusException(
@@ -73,7 +73,7 @@ public class MatchController {
 
     @GetMapping({"/matches", "/matches/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Collection<RecordOutput> getMatch(@PathVariable(required = false) Integer id) {
+    public Collection<MatchOutputDto> getMatch(@PathVariable(required = false) Integer id) {
         if (id != null) {
             Match m = repository.findById(id).orElseThrow(() -> new ResponseStatusException(
                     HttpStatus.NOT_FOUND, String.format("match with id %d not found", id)
