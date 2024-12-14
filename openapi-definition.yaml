@@ -28,8 +28,8 @@ paths:
       description: Delete all Match objects stored on the server
       operationId: deleteMatches
       responses:
-        '200':
-          description: OK
+        '204':
+          $ref: '#/components/responses/successfulResourceDeletion'
   /matches/{matchId}:
     get:
       description: Returns a Match, based on a given id
@@ -58,8 +58,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/matchId'
       responses:
-        '200':
-          description: OK
+        '204':
+          $ref: '#/components/responses/successfulResourceDeletion'
   /matchodds:
     get:
       description: Return all Match Odds objects stored on the server
@@ -82,8 +82,8 @@ paths:
       description: Delete all Match Odd objects stored on the server
       operationId: deleteMatchOdds
       responses:
-        '200':
-          description: OK
+        '204':
+          $ref: '#/components/responses/successfulResourceDeletion'
   /matchodds/{oddId}:
     get:
       description: Return a Match Odd, based on a given id
@@ -112,8 +112,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/oddId'
       responses:
-        '200':
-          description: OK
+        '204':
+          $ref: '#/components/responses/successfulResourceDeletion'
 
 components:
   schemas:
@@ -189,6 +189,8 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/matchodd'
+    successfulResourceDeletion:
+      description: resource deleted successfully
   parameters:
     matchId:
       name: matchId
