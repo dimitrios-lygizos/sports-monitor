@@ -1,12 +1,208 @@
 openapi: "3.0.2"
 info:
-  title: API Title
-  version: "1.0"
+  title: Web Service handling match odds - football, basketball.
+  version: "1.0-ALPHA"
 servers:
-  - url: https://api.server.test/v1
+  - url: https://localhost:8080/matchOddsService
 paths:
-  /test:
+  /matches:
     get:
+      description: Return all Match objects stored on the server
+      operationId: retrieveMatches
+      responses:
+        '200':
+          $ref: '#/components/responses/matchesResponseSuccess'
+    post:
+      description: Store a new Match on the server
+      operationId: addMatch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/match'
+      responses:
+        '201':
+          description: Match created
+
+    delete:
+      description: Delete all Match objects stored on the server
+      operationId: deleteMatches
       responses:
         '200':
           description: OK
+  /matches/{matchId}:
+    get:
+      description: Returns a Match, based on a given id
+      operationId: find match by id
+      parameters:
+        - $ref: '#/components/parameters/matchId'
+      responses:
+        '200':
+          $ref: '#/components/responses/matchResponseSuccess'
+    put:
+      description: Modify the contents of a Match, based on a given id
+      operationId: modifyMatch
+      parameters:
+        - $ref: '#/components/parameters/matchId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/match'
+      responses:
+        '200':
+          $ref: '#/components/responses/matchResponseSuccess'
+    delete:
+      description: Delete a Match object, based on a given id
+      operationId: deleteMatch
+      parameters:
+        - $ref: '#/components/parameters/matchId'
+      responses:
+        '200':
+          description: OK
+  /matchodds:
+    get:
+      description: Return all Match Odds objects stored on the server
+      operationId: findMatchOdds
+      responses:
+        '200':
+          $ref: '#/components/responses/matchOddsResponseSuccess'
+    post:
+      description: Add a new MatchOdd object
+      operationId: addMatchOdd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/matchodd'
+      responses:
+        '201':
+          description: Match Odd created
+    delete:
+      description: Delete all Match Odd objects stored on the server
+      operationId: deleteMatchOdds
+      responses:
+        '200':
+          description: OK
+  /matchodds/{oddId}:
+    get:
+      description: Return a Match Odd, based on a given id
+      operationId: findMatchOdd
+      parameters:
+        - $ref: '#/components/parameters/oddId'
+      responses:
+        '200':
+          $ref: '#/components/responses/matchOddResponseSuccess'
+    put:
+      description: Modify a Match Odd object
+      operationId: modifyMatchOdd
+      parameters:
+        - $ref: '#/components/parameters/oddId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/matchodd'
+      responses:
+        '200':
+          $ref: '#/components/responses/matchOddResponseSuccess'
+    delete:
+      description: Delete a Match Odd, based on a given id
+      operationId: deleteMatchOdd
+      parameters:
+        - $ref: '#/components/parameters/oddId'
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    simpleId:
+      title: Web Service ID structure
+      description: object describing the identification variables given to matches or match odds by the web service
+      type: integer
+      minimum: 1
+      example: 2
+    match:
+      title: A Match object
+      description: object describing a football or basketball match
+      type: object
+      properties:
+        description:
+          type: string
+          example: "PAO-OSFP 22/11/2023"
+        match_date:
+          type: string
+          example: "22/11/2023"
+        match_time:
+          type: string
+          example: "00:30"
+        team_a:
+          type: string
+          example: "Panathinaikos"
+        team_b:
+          type: string
+          example: "Olympiakos Pireus"
+        sport:
+          type: integer
+          example: 1
+    matchodd:
+      title: A Match Odd object
+      description: object representing a single odd of a match, typically a match would require 3 odd object to fully cover all cases
+      type: object
+      properties:
+        match_id:
+          type: integer
+          example: 33
+        specifier:
+          type: string
+          example: "X"
+        odd:
+          type: number
+          example: 2.95
+  responses:
+    matchResponseSuccess:
+      description: Operation success, returning a single Match object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/match'
+    matchesResponseSuccess:
+      description: Operation success, returning an array of Match objects
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/match'
+    matchOddResponseSuccess:
+      description: Operation success, returning a single Match Odd object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/matchodd'
+    matchOddsResponseSuccess:
+      description: Operation success, returning an array of Match Odd objects
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/matchodd'
+  parameters:
+    matchId:
+      name: matchId
+      in: path
+      description: The Match id identifying a Match object
+      schema:
+        $ref: '#/components/schemas/simpleId'
+      required: true
+      allowEmptyValue: false
+    oddId:
+      name: oddId
+      in: path
+      description: The Odd identifying a Match Odd object
+      schema:
+        $ref: '#/components/schemas/simpleId'
+      required: true
+      allowEmptyValue: false
