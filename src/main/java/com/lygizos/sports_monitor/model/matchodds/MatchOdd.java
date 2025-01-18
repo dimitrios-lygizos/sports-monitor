@@ -6,53 +6,42 @@ import com.lygizos.sports_monitor.model.match.Match;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 @Table(name="odds")
-public class MatchOdd {
+@Getter
+@Setter
+@NoArgsConstructor
+public class MatchOdd
+{
+    // JPQL
     @Id
     @GeneratedValue
-    private Integer id;
+    // JPQL end
+    @NonNull  private Integer id;
+
+    // JPQL
     @NotNull
     @ManyToOne
     @JoinColumn( name="match_id" )
     @JsonBackReference
-    private Match match;
-    @NotNull
-    private Common.Specifier specifier;
+    // JPQL end
+    @NonNull private Match match;
+
+    @NotNull // JPQL
+    @NonNull private Common.Specifier specifier;
+
+    // JPQL
     @NotNull
     @PositiveOrZero
-    private double odd;
+    // JPQL end
+    @NonNull private double odd;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public @NotNull Match getMatch() {
-        return match;
-    }
-
-    public void setMatch(@NotNull Match matchParent) {
-        this.match = matchParent;
-     }
-
-    public @NotNull Common.Specifier getSpecifier() {
-        return specifier;
-    }
-
-    public void setSpecifier(@NotNull Common.Specifier specifier) {
-        this.specifier = specifier;
-    }
-
-    public @NotNull double getOdd() {
-        return odd;
-    }
-
-    public void setOdd(@NotNull double odd) {
+    public void setOdd(double odd) {
         if (odd < 0.0) {
             throw new IllegalArgumentException("Odd must be a Positive/Zero double");
         }

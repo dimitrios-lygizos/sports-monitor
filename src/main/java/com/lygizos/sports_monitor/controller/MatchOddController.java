@@ -1,6 +1,7 @@
 package com.lygizos.sports_monitor.controller;
 
 import com.lygizos.sports_monitor.model.matchodds.*;
+import com.lygizos.sports_monitor.model.service.SportService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,16 +12,12 @@ import java.util.*;
 import static com.lygizos.sports_monitor.Common.stringToSpecifier;
 
 @RestController
-public class MatchOddController {
-    private final MatchOddMapper oddMapper;
-    private final MatchOddRepository repository;
-
-    public MatchOddController(
-            MatchOddMapper oddMapper,
-            MatchOddRepository repository
-    ) {
-        this.oddMapper = oddMapper;
-        this.repository = repository;
+public class MatchOddController
+{
+    private final SportService service;
+    public MatchOddController (SportService service)
+    {
+        this.service = service;
     }
 
     @PostMapping("/matchodds")
@@ -28,28 +25,21 @@ public class MatchOddController {
     public String addMatchOdd(
             @RequestBody MatchOddInputDto input
     ) {
-        MatchOdd beanBeforeSave = oddMapper.requestDtoToMatchOddBean(input);
-        MatchOdd beanAfterSave = repository.save(beanBeforeSave);
-        return beanAfterSave.getId().toString();
+        return service.addOdd(input);
     }
 
-    @GetMapping({"/matchodds", "/matchodds/{id}"})
+    @GetMapping("/matchodds/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Collection<MatchOddOutputDto> getMatchOdds(
-            @PathVariable(required = false) Integer id
+    public MatchOddOutputDto getMatchOdd(
+            @PathVariable(required = true) Integer id
     ) {
-        if (id != null) {
-            List<MatchOddOutputDto> matchOddOutputDto = new ArrayList<>(1);
-            matchOddOutputDto.add(
-                oddMapper.matchOddBeanToResponseDto( repository.findById(id)
-                    .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("\"Match Odd\" with id %d not found", id)))
-                )
-            );
-            return matchOddOutputDto;
-        } else {
-            List<MatchOdd> allOdds = repository.findAll();
-            return allOdds.stream().map(oddMapper::matchOddBeanToResponseDto).toList();
-        }
+        return service.getOdd(id);
+    }
+
+    @GetMapping("/matchodds")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<MatchOddOutputDto> getMatchOdds() {
+        return
     }
 
     @PutMapping("/matchodds/{matchOddId}")
@@ -58,17 +48,7 @@ public class MatchOddController {
             @PathVariable Integer matchOddId,
             @RequestBody MatchOddInputDto input
     ) throws BadRequestException {
-        if (matchOddId == null) {
-            throw new BadRequestException("PathVariable matchOddId not provided. Please check again");
-        }
-        if (!repository.existsById(matchOddId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("\"Match Odd\" with id %d not found", matchOddId));
-        }
-        MatchOdd matchOddToUpdate = repository.getReferenceById(matchOddId);
-        matchOddToUpdate.setOdd(input.odd());
-        matchOddToUpdate.setSpecifier(stringToSpecifier(input.specifier()));
-        MatchOdd matchOddAfterUpdate = repository.save(matchOddToUpdate);
-        return oddMapper.matchOddBeanToResponseDto(matchOddAfterUpdate);
+        return service.updateOdd(matchOddId, input);
     }
 
     @DeleteMapping({"/matchodds", "/matchodds/{matchOddId}"})
@@ -76,15 +56,7 @@ public class MatchOddController {
     public void deleteMatchOdds(
             @PathVariable(required = false) Integer matchOddId
     ) {
-        if (matchOddId != null) {
-            if (repository.existsById(matchOddId)) {
-                repository.deleteById(matchOddId);
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("\"Match Odd\" with id %d not found", matchOddId));
-            }
-        } else {
-            repository.deleteAll();
-        }
-
+        if (matchOddId != null) service.deleteOdd(matchOddId);
+        else service.deleteAllOdds();
     }
 }
