@@ -3,7 +3,7 @@ info:
   title: Web Service handling match odds - football, basketball.
   version: "1.0-ALPHA"
 servers:
-  - url: https://localhost:8080/matchOddsService
+  - url: http://localhost:8080/matchOddsService
 paths:
   /matches:
     get:

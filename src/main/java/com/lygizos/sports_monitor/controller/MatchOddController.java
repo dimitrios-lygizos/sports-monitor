@@ -4,11 +4,13 @@ import com.lygizos.sports_monitor.model.matchodds.*;
 import com.lygizos.sports_monitor.model.service.SportService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:61112") // For SWAGGER OAD try
 public class MatchOddController
 {
     private final SportService service;
@@ -17,7 +19,7 @@ public class MatchOddController
         this.service = service;
     }
 
-    @PostMapping("/matchodds")
+    @PostMapping(value = "/matchodds", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public String addMatchOdd(
             @RequestBody MatchOddInputDto input
@@ -25,21 +27,21 @@ public class MatchOddController
         return service.addOdd(input);
     }
 
-    @GetMapping("/matchodds/{id}")
+    @GetMapping(path = "/matchodds/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public MatchOddOutputDto getMatchOdd(
-            @PathVariable(required = true) Integer id
+            @PathVariable Integer id
     ) {
         return service.getOdd(id);
     }
 
-    @GetMapping("/matchodds")
+    @GetMapping(path = "/matchodds", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Collection<MatchOddOutputDto> getMatchOdds() {
         return service.retrieveOdds();
     }
 
-    @PutMapping("/matchodds/{matchOddId}")
+    @PutMapping(path = "/matchodds/{matchOddId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public MatchOddOutputDto updateMatchOdd(
             @PathVariable Integer matchOddId,

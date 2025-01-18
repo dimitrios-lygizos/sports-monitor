@@ -13,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name="matches")
+@NoArgsConstructor
 public @Data class Match
 {
     // JPQL

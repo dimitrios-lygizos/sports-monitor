@@ -4,24 +4,26 @@ import com.lygizos.sports_monitor.model.match.*;
 import com.lygizos.sports_monitor.model.service.SportService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:61112") // For SWAGGER OAD try
 public class MatchController {
     private final SportService service;
     public MatchController(SportService service) {
         this.service = service;
     }
 
-    @PostMapping("/matches")
+    @PostMapping(path = "/matches", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public String addMatch (@RequestBody MatchInputDto inputMatch) {
         return service.addMatch(inputMatch);
     }
 
-    @PutMapping("/matches/{id}")
+    @PutMapping(path = "/matches/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public MatchOutputDto updateMatch(
             @PathVariable Integer id,
@@ -39,12 +41,13 @@ public class MatchController {
         }
     }
 
-    @GetMapping("/matches/{id}")
+    @GetMapping(path = "/matches/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public MatchOutputDto getMatch(@PathVariable Integer id) {
         return service.findMatchById(id);
     }
-    @GetMapping("/matches")
+
+    @GetMapping(path = "/matches", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Collection<MatchOutputDto> getMatches() {
         return service.retrieveMatches();
