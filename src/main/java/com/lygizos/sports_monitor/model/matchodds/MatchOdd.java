@@ -39,7 +39,7 @@ public class MatchOdd
     @NotNull
     @PositiveOrZero
     // JPQL end
-    @NonNull private double odd;
+    private double odd;
 
     public void setOdd(double odd) {
         if (odd < 0.0) {

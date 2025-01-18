@@ -5,13 +5,8 @@ import com.lygizos.sports_monitor.model.service.SportService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-
-import static com.lygizos.sports_monitor.Common.integerToSport;
 
 @RestController
 public class MatchController {

@@ -5,11 +5,8 @@ import com.lygizos.sports_monitor.model.service.SportService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.*;
 
-import static com.lygizos.sports_monitor.Common.stringToSpecifier;
 
 @RestController
 public class MatchOddController
@@ -39,7 +36,7 @@ public class MatchOddController
     @GetMapping("/matchodds")
     @ResponseStatus(HttpStatus.OK)
     public Collection<MatchOddOutputDto> getMatchOdds() {
-        return
+        return service.retrieveOdds();
     }
 
     @PutMapping("/matchodds/{matchOddId}")
