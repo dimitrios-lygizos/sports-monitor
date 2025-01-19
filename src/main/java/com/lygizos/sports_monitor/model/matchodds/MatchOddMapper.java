@@ -9,7 +9,7 @@ import static com.lygizos.sports_monitor.Common.*;
 public class MatchOddMapper {
     public MatchOdd requestDtoToMatchOddBean(MatchOddInputDto record) {
         if (record == null) {
-            throw new IllegalArgumentException("Input provided is null, please provide a valid input source");
+            throw new NullPointerException(String.format("input argument of class %s passed in mapper method is null", MatchOddInputDto.class.getSimpleName()));
         }
         MatchOdd mo = new MatchOdd();
         mo.setSpecifier(stringToSpecifier(record.specifier()));
@@ -21,6 +21,9 @@ public class MatchOddMapper {
     }
 
     public MatchOddOutputDto matchOddBeanToResponseDto(MatchOdd m) {
+        if (m == null) {
+            throw new NullPointerException(String.format("input argument of class %s passed in mapper method is null", MatchOdd.class.getSimpleName()));
+        }
         return new MatchOddOutputDto(
             m.getId(),
             m.getMatch().getId(),

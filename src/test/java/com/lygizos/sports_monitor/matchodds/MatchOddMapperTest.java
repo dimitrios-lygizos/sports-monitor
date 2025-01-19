@@ -14,41 +14,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MatchOddMapperTest {
     final MatchOddMapper mapper = new MatchOddMapper();
-    final String AWAY_SPECIFIER = "2";
-    final String HOME_SPECIFIER = "1";
-    final String DRAW_SPECIFIER = "X";
+    private static final String HOME_INPUT_SPECIFIER = "1";
+    private static final String DRAW_INPUT_SPECIFIER = "X";
+    private static final String AWAY_INPUT_SPECIFIER = "2";
 
     @Test
     public void testRequestDtoToMatchOddBeanValid() {
         MatchOddInputDto recordArgument = new MatchOddInputDto(
                 99, // match id
-                AWAY_SPECIFIER, // specifier
+                AWAY_INPUT_SPECIFIER, // specifier
                 2.45 // odd
         );
         MatchOdd mo = mapper.requestDtoToMatchOddBean(recordArgument);
-        assertEquals(mo.getOdd(), recordArgument.odd());
-        assertEquals(mo.getMatch().getId(), recordArgument.matchId());
-        assertEquals(mo.getSpecifier(), Common.stringToSpecifier(AWAY_SPECIFIER));
+        assertEquals(recordArgument.odd(), mo.getOdd());
+        assertEquals(recordArgument.matchId(), mo.getMatch().getId());
+        assertEquals(Common.stringToSpecifier(recordArgument.specifier()), mo.getSpecifier());
     }
 
     @Test
     public void testRequestDtoToMatchOddBeanValid2() {
         MatchOddInputDto recordArgument = new MatchOddInputDto(
                 10, // match id
-                DRAW_SPECIFIER, // specifier
+                DRAW_INPUT_SPECIFIER, // specifier
                 2 // odd
         );
         MatchOdd mo = mapper.requestDtoToMatchOddBean(recordArgument);
-        assertEquals(mo.getOdd(), recordArgument.odd());
-        assertEquals(mo.getMatch().getId(), recordArgument.matchId());
-        assertEquals(mo.getSpecifier(), Common.stringToSpecifier(DRAW_SPECIFIER));
+        assertEquals(recordArgument.odd(), mo.getOdd());
+        assertEquals(recordArgument.matchId(), mo.getMatch().getId());
+        assertEquals(Common.stringToSpecifier(recordArgument.specifier()), mo.getSpecifier());
     }
 
     @Test
     public void testRequestDtoToMatchOddBeanNegativeOdd() {
         MatchOddInputDto recordArgument = new MatchOddInputDto(
                 10, // match id
-                DRAW_SPECIFIER, // specifier
+                HOME_INPUT_SPECIFIER, // specifier
                 -2.1 // odd
         );
         String exceptionMsg = "Odd must be a Positive/Zero double";
@@ -58,8 +58,8 @@ class MatchOddMapperTest {
     @ParameterizedTest
     @NullSource
     public void testRequestDtoToMatchOddBeanNullCheck(MatchOddInputDto recordArgument) {
-        String exceptionMsg = "Input provided is null, please provide a valid input source";
-        assertThrows(IllegalArgumentException.class, () -> mapper.requestDtoToMatchOddBean(recordArgument), exceptionMsg);
+        String exceptionMsg = String.format("input argument of class %s passed in mapper method is null", MatchOddInputDto.class.getSimpleName());
+        assertThrows(NullPointerException.class, () -> mapper.requestDtoToMatchOddBean(recordArgument), exceptionMsg);
     }
 
     @Test
@@ -72,14 +72,20 @@ class MatchOddMapperTest {
         mo.setId(2);
         mo.setMatch(m);
         mo.setOdd(1.99);
-        mo.setSpecifier(Common.stringToSpecifier(HOME_SPECIFIER));
+        mo.setSpecifier(Common.Specifier.DRAW);
 
         MatchOddOutputDto mOutput = mapper.matchOddBeanToResponseDto(mo);
 
-        assertEquals(mOutput.id(), mo.getId());
-        assertEquals(mOutput.matchId(), mo.getMatch().getId());
-        assertEquals(mOutput.odd(), mo.getOdd());
-        assertEquals(mOutput.specifier(), HOME_SPECIFIER);
+        assertEquals(mo.getId(), mOutput.id());
+        assertEquals(mo.getMatch().getId(), mOutput.matchId());
+        assertEquals(mo.getOdd(), mOutput.odd());
+        assertEquals(Common.specifierToString(mo.getSpecifier()), mOutput.specifier());
     }
 
+    @ParameterizedTest
+    @NullSource
+    public void testNullSourceOnMatchOddToResponseDto(MatchOdd mo) {
+        String exceptionMsg = String.format("input argument of class %s passed in mapper method is null", MatchOdd.class.getSimpleName());
+        assertThrows(NullPointerException.class, () -> mapper.matchOddBeanToResponseDto(mo), exceptionMsg);
+    }
 }

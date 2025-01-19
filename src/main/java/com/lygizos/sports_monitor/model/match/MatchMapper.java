@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MatchMapper {
     public Match inputRecordToMatch(MatchInputDto input) {
+        if (input == null) {
+            throw new NullPointerException(String.format("input argument of class %s passed in mapper method is null", MatchInputDto.class.getSimpleName()));
+        }
         Match m = new Match();
         m.setDescription(input.description());
         m.setMatchDate(input.matchDate());
@@ -17,6 +20,9 @@ public class MatchMapper {
     }
 
     public MatchOutputDto MatchToOutputRecord(Match m) {
+        if (m == null) {
+            throw new NullPointerException(String.format("input argument of class %s passed in mapper method is null", Match.class.getSimpleName()));
+        }
         return new MatchOutputDto(
             m.getId(),
             m.getDescription(),
